@@ -3,19 +3,32 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 8888",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
+    "apollo-link": "^1.2.14",
+    "apollo-link-error": "^1.1.13",
+    "apollo-link-http": "^1.5.17",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "graphql": "^16.0.1",
+    "graphql-tag": "^2.12.5",
+    "vue": "^2.6.11",
+    "vue-apollo": "^3.0.8",
+    "vuetify": "^2.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/test-utils": "^1.0.3",
-    "vue-template-compiler": "^2.6.11"
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.4.3",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0"
   }
 }
