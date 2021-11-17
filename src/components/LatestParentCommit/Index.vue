@@ -16,14 +16,15 @@ export default {
         [true]: 'mdi-check',
       }
 
-      return icons[this.status] ?? 'mdi-help'
+      return icons[this.status]
     },
     color() {
       const colors = {
         [false]: 'red',
         [true]: 'green',
       }
-      return colors[this.status] ?? 'yellow'
+
+      return colors[this.status]
     },
   },
 }

@@ -1,13 +1,22 @@
 
 <script>
-const STATES = [
-  'EXPECTED',
-  'ERROR',
-  'FAILURE',
-  'PENDING',
-  'SUCCESS',
-  'UNKNOWN', // Not a real value. Just used in case there has never been a build
-]
+import { BUILD_STATUSES } from '../../services/github'
+
+const COLORS = {
+  EXPECTED: 'blue',
+  ERROR: 'red',
+  FAILURE: 'red',
+  PENDING: 'yellow',
+  SUCCESS: 'green',
+}
+
+const ICONS = {
+  EXPECTED: 'mdi-help',
+  ERROR: 'mdi-close',
+  FAILURE: 'mdi-close',
+  PENDING: 'mdi-timer-sand',
+  SUCCESS: 'mdi-check',
+}
 
 export default {
   name: 'BuildStatus',
@@ -22,33 +31,11 @@ export default {
     }
   },
   computed: {
-    state() {
-      if(!this.status){
-        return 'UNKNOWN'
-      }
-
-      return this.status
-    },
     icon() {
-      const icons = {
-        EXPECTED: 'mdi-help',
-        ERROR: 'mdi-close',
-        FAILURE: 'mdi-close',
-        PENDING: 'mdi-timer-sand',
-        SUCCESS: 'mdi-check',
-        UNKNOWN: 'mdi-help',
-      }
-      return icons[this.state]
+      return ICONS[this.status]
     },
     color() {
-      const colors = {
-        EXPECTED: 'blue',
-        ERROR: 'red',
-        FAILURE: 'red',
-        PENDING: 'yellow',
-        SUCCESS: 'green',
-      }
-      return colors[this.state]
+      return COLORS[this.status]
     },
   },
 }

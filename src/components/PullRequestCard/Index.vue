@@ -3,6 +3,7 @@ import BuildStatus from '../BuildStatus/Index.vue'
 import MergeStatus from '../MergeStatus/Index.vue'
 import LatestParentCommit from '../LatestParentCommit/Index.vue'
 import UserList from '../UserList/Index.vue'
+import { BUILD_STATUSES, MERGE_STATUSES } from '../../services/github'
 
 export default {
   name: 'PullRequestCard',
@@ -23,13 +24,13 @@ export default {
     },
     build: {
       type: Object,
-      default: null,
+      default: () => {},
     },
     freshComments: {
       type: Number,
       default: null,
     },
-    latestParentCommit: {
+    upToDateWithParentBranch: {
       type: Boolean,
       default: true,
     },
@@ -64,11 +65,11 @@ export default {
   },
   methods: {
     needsAttention() {
-      if(this.build?.status === 'FAILURE') {
+      if(this.build.status === BUILD_STATUSES.FAILURE) {
         return true
       }
 
-      if(this.mergeStatus === 'CONFLICTING') {
+      if(this.mergeStatus === MERGE_STATUSES.CONFLICTING) {
         return true
       }
 
@@ -95,7 +96,7 @@ export default {
     elevation="2"
     outlined
     tile
-    width="320"
+    width="300"
     :class="needsAttention() === true && 'attention'"
   >
     <v-card-title class="title">
@@ -118,7 +119,7 @@ export default {
     <v-card-text>
 
       <div 
-        v-if="build"
+        v-if="build.status && build.url"
         class="bar"
       >
         Build Status: 
@@ -137,7 +138,7 @@ export default {
       <div class="bar">
         Latest Parent Commit:
         <LatestParentCommit 
-          :status="latestParentCommit"
+          :status="upToDateWithParentBranch"
         />
       </div>
       <div 
@@ -168,14 +169,14 @@ export default {
     </v-card-subtitle>
     <v-card-text>
       <div class="bar">
-        <div>
+        <div v-if="approvals.length > 0">
           Approvals
           <UserList
             class="userList"
             :items="approvals"
           />
         </div>
-        <div>
+        <div v-if="unpublishedReviews.length > 0">
           Unpublished
           <UserList
             class="userList"

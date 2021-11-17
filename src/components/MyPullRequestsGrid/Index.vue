@@ -24,7 +24,7 @@ export default {
       :author="pr.author"
       :build="pr.build"
       :fresh-comments="pr.freshComments"
-      :latest-parent-commit="pr.latestParentCommit"
+      :up-to-date-with-parent-branch="pr.upToDateWithParentBranch"
       :merge-status="pr.mergeStatus"
       :number="pr.number"
       :repository="pr.repository"
