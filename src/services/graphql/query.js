@@ -23,13 +23,13 @@ query ($username: String!, $approvedPullRequests: String!, $taggedPullRequests: 
 				number
 				author { login }
 				repository { name }
-				reviews(first: 100) {
+				reviews(first: 20) {
 					nodes {
 						author { login }
 						state # (APPROVED, COMMENTED, PENDING)
 					}
 				}
-				reviewThreads(first: 100) {
+				reviewThreads(first: 50) {
 					nodes {
 						isResolved
 						isOutdated
@@ -90,7 +90,7 @@ query ($username: String!, $approvedPullRequests: String!, $taggedPullRequests: 
 							state # If the PR has been approved
 						}
 					}
-					reviewThreads(first:100) {
+					reviewThreads(first:50) {
 						nodes {
 							isResolved
 							isOutdated
@@ -143,6 +143,12 @@ query ($username: String!, $approvedPullRequests: String!, $taggedPullRequests: 
 									state
 								}
 							}
+						}
+					}
+					reviews(first: 20) {
+						nodes {
+							author { login }
+							state # (APPROVED, COMMENTED, PENDING)
 						}
 					}
           reviewThreads(first: 20) {

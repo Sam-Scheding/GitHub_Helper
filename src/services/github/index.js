@@ -123,6 +123,7 @@ const transformApprovedPullRequests = pullRequests => {
       repository: pr.node.repository.name,
       staleComments: getNumStaleComments(pr.node),
       mergeStatus: pr.node.mergeable,
+      approvals: getApprovals(pr.node.reviews.nodes),
       build: {},
     }
 

@@ -5,7 +5,12 @@ import ApprovedPullRequestsGrid from './components/ApprovedPullRequestsGrid/Inde
 import ToDoList from './components/ToDoList/Index.vue'
 import { fetchAllFromGitHub } from './services/graphql'
 import * as GithubService from './services/github'
-import { GITHUB_USERNAME } from './config'
+import { 
+  GITHUB_USERNAME, 
+  GITHUB_OAUTH_URL, 
+  GITHUB_APP_CLIENT_ID,
+  GITHUB_APP_CALLBACK_URL,
+} from './config'
 
 export default {
   name: 'App',
@@ -22,6 +27,7 @@ export default {
     runningBuilds: [],
     staleBranches: [],
     GITHUB_USERNAME,
+    GITHUB_OAUTH_URL,
   }),
   mounted() {    
     this.setData()
@@ -52,6 +58,19 @@ export default {
       }
     },  
   },
+  computed: {
+    gitHubURL() {
+      const paramsObj = {
+        client_id: GITHUB_APP_CLIENT_ID,
+        redirect_uri: GITHUB_APP_CALLBACK_URL,
+        scope: 'repo read:user read:email'
+        // scope: 'repo read:org read:user read:email'
+      }
+
+      const params = new URLSearchParams(paramsObj)
+      return `${GITHUB_OAUTH_URL}?${params}`
+    }
+  }
 };
 </script>
 
@@ -72,6 +91,9 @@ export default {
       <h1 class="d-none">
         GitHub Helper
       </h1>
+      <a :href="gitHubURL">
+        LOGIN
+      </a>
     </v-app-bar>
     <v-main class="content">
       <v-row>
@@ -114,6 +136,7 @@ export default {
         </v-col>
       </v-row>
       <ToDoList 
+        class="toDoList"
         :builds="runningBuilds"
         :branches="staleBranches"
       />
@@ -122,6 +145,11 @@ export default {
 </template>
 
 <style scoped>
+.toDoList {
+  margin-top: 64px;
+  position: fixed;
+}
+
 .content {
   margin-left: 24px;
 }
